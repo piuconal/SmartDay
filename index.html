@@ -39,13 +39,22 @@
     }
 
     function calculateDayOfWeek() {
-      const year = parseInt(document.getElementById('year').value);
-      const month = parseInt(document.getElementById('month').value);
-      const day = parseInt(document.getElementById('day').value);
+    const year = parseInt(document.getElementById('year').value);
+    const month = parseInt(document.getElementById('month').value);
+    const day = parseInt(document.getElementById('day').value);
 
-      const dayOfWeek = dow(year, month, day);
-      document.getElementById('result').innerText = 'THỨ: ' + dayOfWeek;
+    const dayOfWeek = dow(year, month, day);
+
+    // Thay đổi hiển thị tùy thuộc vào kết quả
+    const resultElement = document.getElementById('result');
+    if (dayOfWeek === 1) {
+      resultElement.innerText = 'CHỦ NHẬT';
+      resultElement.style.color = 'red';  // Tuỳ chỉnh màu sắc nếu cần thiết
+    } else {
+      resultElement.innerText = 'THỨ: ' + dayOfWeek;
+      resultElement.style.color = 'black';  // Màu sắc mặc định cho các ngày khác
     }
+  }
   </script>
 
 </body>
