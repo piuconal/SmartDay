@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartDay-By PiuConal</title>
+</head>
+<body>
+    <p style="margin-left: 50px; margin-top: 50px;">By Vu Trong Hieu</p>
+  <h1 style="margin-left: 130px;">SmartDay</h1>
+  <div style="padding-left: 30px;width: 220px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+    <label for="day">Ngày:</label>
+    <input type="number" id="day" placeholder="Enter day">
+  </div>
+<br>
+<div style="padding-left: 30px;width: 220px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+
+  <label for="month">Tháng:</label>
+  <input type="number" id="month" placeholder="Enter month">
+</div>
+
+<br>
+<div style="padding-left: 30px;width: 220px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+
+<label for="year">Năm:</label>
+  <input type="number" id="year" placeholder="Enter year">
+</div>
+
+<br>
+  <button style="margin-left: 80px;" onclick="calculateDayOfWeek()">PiuConal</button>
+
+  <p style="margin-left: 100px; color: red;" id="result">THỨ: </p>
+
+  <script>
+    function dow(y, m, d) {
+      const t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+      y -= m < 3;
+      return (y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) + t[m - 1] + d) % 7 + 1;
+    }
+
+    function calculateDayOfWeek() {
+      const year = parseInt(document.getElementById('year').value);
+      const month = parseInt(document.getElementById('month').value);
+      const day = parseInt(document.getElementById('day').value);
+
+      const dayOfWeek = dow(year, month, day);
+      document.getElementById('result').innerText = 'THỨ: ' + dayOfWeek;
+    }
+  </script>
+
+</body>
+</html>
