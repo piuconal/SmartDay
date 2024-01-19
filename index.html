@@ -1,61 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartDay-By PiuConal</title>
-</head>
-<body>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartDay-By PiuConal</title>
+  </head>
+  <body>
     <p style="margin-left: 50px; margin-top: 50px;">By Vu Trong Hieu</p>
-  <h1 style="margin-left: 130px;">SmartDay</h1>
-  <div style="padding-left: 30px;width: 220px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
-    <label for="day">Ngày:</label>
-    <input type="number" id="day" placeholder="Enter day">
-  </div>
-<br>
-<div style="padding-left: 30px;width: 220px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+    <h1 style="margin-left: 110px;">SmartDay</h1>
+    <div style="padding-left: 90px;width: 220px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+      <input type="number" id="day" placeholder="Nhập NGÀY">
+    </div>
+    <br>
+    <div style="padding-left: 90px;width: 220px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+      <input type="number" id="month" placeholder="Nhập THÁNG">
+    </div>
+    <br>
+    <div style="padding-left: 90px;width: 220px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+      <input type="number" id="year" placeholder="Nhập NĂM">
+    </div>
+    <br>
+    <button style="margin-left: 140px;" onclick="calculateDayOfWeek()">PiuConal</button>
+    <p style="margin-left: 100px; color: red;" id="result">THỨ: </p>
+    <script>
+      // Get today's date
+      const today = new Date();
+      const currentDay = today.getDate();
+      const currentMonth = today.getMonth() + 1; // Month is zero-based
+      const currentYear = today.getFullYear();
 
-  <label for="month">Tháng:</label>
-  <input type="number" id="month" placeholder="Enter month">
-</div>
+      // Counter variable
+      let visitCounter = localStorage.getItem('visitCounter') || 0;
 
-<br>
-<div style="padding-left: 30px;width: 220px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+      // Check if it's a new day
+      if (
+        localStorage.getItem('lastVisitedDay') !== currentDay ||
+        localStorage.getItem('lastVisitedMonth') !== currentMonth ||
+        localStorage.getItem('lastVisitedYear') !== currentYear
+      ) {
+        // Increment visit counter randomly between 30 and 50
+        const increment = Math.floor(Math.random() * (50 - 30 + 1)) + 30;
+        visitCounter += increment;
 
-<label for="year">Năm:</label>
-  <input type="number" id="year" placeholder="Enter year">
-</div>
+        // Update last visited date
+        localStorage.setItem('lastVisitedDay', currentDay);
+        localStorage.setItem('lastVisitedMonth', currentMonth);
+        localStorage.setItem('lastVisitedYear', currentYear);
+      }
 
-<br>
-  <button style="margin-left: 80px;" onclick="calculateDayOfWeek()">PiuConal</button>
+      // Display visit counter
+      document.write("<p style='margin-left: 100px;'>Lượt truy cập: " + visitCounter + "</p>");
 
-  <p style="margin-left: 100px; color: red;" id="result">THỨ: </p>
+      function dow(y, m, d) {
+        const t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+        y -= m < 3;
+        return (y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) + t[m - 1] + d) % 7 + 1;
+      }
 
-  <script>
-    function dow(y, m, d) {
-      const t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
-      y -= m < 3;
-      return (y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) + t[m - 1] + d) % 7 + 1;
-    }
+      function calculateDayOfWeek() {
+        const year = parseInt(document.getElementById('year').value);
+        const month = parseInt(document.getElementById('month').value);
+        const day = parseInt(document.getElementById('day').value);
 
-    function calculateDayOfWeek() {
-    const year = parseInt(document.getElementById('year').value);
-    const month = parseInt(document.getElementById('month').value);
-    const day = parseInt(document.getElementById('day').value);
+        const dayOfWeek = dow(year, month, day);
 
-    const dayOfWeek = dow(year, month, day);
-
-    // Thay đổi hiển thị tùy thuộc vào kết quả
-    const resultElement = document.getElementById('result');
-    if (dayOfWeek === 1) {
-      resultElement.innerText = 'CHỦ NHẬT';
-      resultElement.style.color = 'red';  // Tuỳ chỉnh màu sắc nếu cần thiết
-    } else {
-      resultElement.innerText = 'THỨ: ' + dayOfWeek;
-      resultElement.style.color = 'black';  // Màu sắc mặc định cho các ngày khác
-    }
-  }
-  </script>
-
-</body>
-</html>
+        // Thay đổi hiển thị tùy thuộc vào kết quả
+        const resultElement = document.getElementById('result');
+        if (dayOfWeek === 1) {
+          resultElement.innerText = 'CHỦ NHẬT';
+          resultElement.style.color = 'red';  // Tuỳ chỉnh màu sắc nếu cần thiết
+        } else {
+          resultElement.innerText = 'THỨ: ' + dayOfWeek;
+          resultElement.style.color = 'black';  // Màu sắc mặc định cho các ngày khác
+        }
+      }
+    </script>
+  </body>
+  </html>
